@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack 模擬訓練系統 - 簡報</title>
+    
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/black.css" id="theme">
+    
+    <!-- Devicon CDN -->
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+
+    <!-- 自訂樣式 -->
+    <style>
+        /* 讓列表在畫面中間，但文字靠左 */
+        .center-block {
+            width: fit-content;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        /* 強調色 */
+        .highlight {
+            color: #ffd700;
+        }
+
+        /* 雙欄佈局 */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            text-align: left;
+        }
+
+        /* 商業九宮格 */
+        .business-canvas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            font-size: 0.5em;
+            text-align: left;
+        }
+        .canvas-cell {
+            border: 1px solid #666;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .canvas-cell h4 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            color: #ffd700;
+        }
+
+        /* 圖片限制 */
+        .diagram {
+            max-height: 500px;
+            max-width: 100%;
+            background: white; /* 如果圖片是透明背景，加個白底可能比較清楚，視情況而定 */
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        /* 程式碼區塊調整 */
+        code {
+            color: #ff9;
+        }
+        
+        /* 功能列表 */
+        .feature-list li {
+            margin-bottom: 0.5em;
+        }
+
+        /* 移除列表點點 (針對使用 icon 的列表) */
+        ul.no-bullet {
+            list-style-type: none;
+            padding-left: 0;
+            margin-left: 0;
+        }
+        ul.no-bullet li {
+            margin-bottom: 0.8em;
+            display: flex;
+            align-items: center;
+        }
+        ul.no-bullet li i {
+            font-size: 1.5em;
+            margin-right: 0.5em;
+            min-width: 1.5em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- 第 1 組：開場與專案介紹 (垂直) -->
+            <section>
+                <!-- 封面 -->
+                <section>
+                    <h1 class="highlight">Blackjack 模擬訓練系統</h1>
+                    <p>基於蒙地卡羅模擬的 21 點策略學習平台</p>
+                    <p style="margin-top: 2em; font-size: 0.6em; color: #888;">
+                        Web APP 開發 - 期末專案<br>
+                        第十組
+                    </p>
+                </section>
+                
+                <!-- 專案簡介 -->
+                <section>
+                    <h2>專案簡介</h2>
+                    <div class="center-block">
+                        <ul>
+                            <li>基於 Web app 開發的 21 點訓練平台</li>
+                            <li>幫助玩家學習基本策略並提升決策能力</li>
+                            <li>使用蒙地卡羅模擬提供即時建議與勝率分析</li>
+                            <li>提供使用者決策分析</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 核心功能列表 -->
+                <section>
+                    <h2>核心功能</h2>
+                    <div class="center-block">
+                        <ul class="feature-list" style="list-style: none; padding-left: 0;">
+                            <li>🎮 互動式遊戲介面</li>
+                            <li>🤖 基於蒙地卡羅模擬的建議系統</li>
+                            <li>📊 決策錯誤追蹤與檢討</li>
+                            <li>📈 牌靴狀態監控</li>
+                            <li>🃏 多副牌（1-8副）支援</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- 第 2 組：技術架構 (垂直) -->
+            <section>
+                <!-- 技術架構標題 -->
+                <section>
+                    <h2>技術架構</h2>
+                    <p class="highlight">前後端分離設計</p>
+                </section>
+
+                <!-- 技術棧 -->
+                <section>
+                    <h2>技術棧</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3 style="text-align: center;">前端</h3>
+                            <ul class="no-bullet">
+                                <li><i class="devicon-react-original colored"></i> React 18.3</li>
+                                <li><i class="devicon-typescript-plain colored"></i> TypeScript 5.6</li>
+                                <li><i class="devicon-vitejs-plain colored"></i> Vite 5.4</li>
+                                <li><i class="devicon-html5-plain colored"></i> Reveal.js (簡報)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="text-align: center;">後端</h3>
+                            <ul class="no-bullet">
+                                <li><i class="devicon-python-plain colored"></i> Python 3</li>
+                                <li><i class="devicon-fastapi-plain colored"></i> FastAPI</li>
+                                <li><i class="devicon-sqlite-plain colored"></i> SQLite</li>
+                                <li><i class="devicon-numpy-plain colored"></i> NumPy (運算)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 系統架構圖 -->
+                <section>
+                    <h2>系統架構</h2>
+                    <img src="images/system-architecture.png" alt="系統架構圖" class="diagram">
+                    <p><small>前端 &harr; API Gateway &harr; 核心邏輯 &harr; DB</small></p>
+                </section>
+
+                <!-- API 設計：遊戲核心 -->
+                <section>
+                    <h2>API 設計：遊戲核心</h2>
+                    <div class="center-block" style="font-size: 0.85em;">
+                        <p><strong>API Endpoints</strong></p>
+                        <ul>
+                            <li><code>POST /api/games</code><br><small style="color:#888">建立新遊戲（設定牌組數）</small></li>
+                            <li><code>POST /api/games/{id}/action</code><br><small style="color:#888">執行動作（Hit, Stand, Double）</small></li>
+                            <li><code>POST /api/games/{id}/next-round</code><br><small style="color:#888">結算並開始下一回合</small></li>
+                            <li><code>GET /api/games/{id}/analysis</code><br><small style="color:#888">取得當前局面的蒙地卡羅分析建議</small></li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- API 設計：系統與歷史 -->
+                <section>
+                    <h2>API 設計：系統與歷史</h2>
+                    <div class="center-block" style="font-size: 0.85em;">
+                        <p><strong>使用者認證 (Auth)</strong></p>
+                        <ul>
+                            <li><code>POST /api/auth/register</code> - 註冊</li>
+                            <li><code>POST /api/auth/login</code> - 登入 (JWT Token)</li>
+                        </ul>
+                        <br>
+                        <p><strong>歷史記錄與數據 (History)</strong></p>
+                        <ul>
+                            <li><code>GET /api/history/mistakes</code><br><small style="color:#888">查詢個人的決策錯誤記錄</small></li>
+                            <li><code>GET /api/history/sessions</code><br><small style="color:#888">查詢過往的遊戲對局列表</small></li>
+                            <li><code>GET /api/history/sessions/{id}/mistakes</code><br><small style="color:#888">查詢特定對局的詳細檢討</small></li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- 第 3 組：核心特色詳解 (垂直) -->
+            <section>
+                <!-- 特色標題 -->
+                <section>
+                    <h2>核心特色詳解</h2>
+                    <p class="highlight">五大功能深度解析</p>
+                </section>
+
+                <!-- 特色 1: 蒙地卡羅 -->
+                <section>
+                    <h3>即時蒙地卡羅模擬</h3>
+                    <div class="center-block">
+                        <ul>
+                            <li>即時進行數千次模擬</li>
+                            <li>計算每個動作的勝率、和局率、敗率</li>
+                            <li>標示最佳動作與期望值（EV）</li>
+                        </ul>
+                        <div style="margin-top: 1em; padding: 1em; border: 1px solid #444; background: rgba(0,0,0,0.3);">
+                            <strong>EV 計算公式：</strong><br>
+                            <code style="color: #4fd1c5;">EV = (勝率 - 敗率) × 倍數</code>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 特色 2: 錯誤追蹤 -->
+                <section>
+                    <h3>決策錯誤追蹤</h3>
+                    <div class="center-block">
+                        <ul>
+                            <li>自動偵測玩家決策 vs 最佳策略</li>
+                            <li>記錄「失誤」操作</li>
+                            <li>回合結束後提供詳細檢討報告</li>
+                            <li>幫助玩家修正直覺偏誤</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 其他特色 -->
+                <section>
+                    <h3>其他功能</h3>
+                    <div class="center-block">
+                        <ul class="feature-list">
+                            <li>📊 <strong>牌靴視覺化</strong>：即時顯示剩餘牌卡分佈</li>
+                            <li>📝 <strong>歷史記錄</strong>：隨時回顧過往對局</li>
+                            <li>🎨 <strong>主題切換</strong>：深色/淺色模式</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- 第 4 組：技術實現細節 (垂直) -->
+            <section>
+                <!-- 標題 -->
+                <section>
+                    <h2>技術實現亮點</h2>
+                </section>
+
+                <!-- 蒙地卡羅流程圖 -->
+                <section>
+                    <h3>模擬演算法流程</h3>
+                    <ul class="feature-list">
+                        <li>採取遞迴抽牌方式</li>
+                        <li>重複執行 10000 次，並記錄結果</li>
+                    </ul>
+                    <img src="images/monte-carlo-flow.png" alt="蒙地卡羅模擬流程圖" class="diagram">
+                </section>
+
+                <!-- 資料庫設計 -->
+                <section>
+                    <h3>資料庫設計</h3>
+                    <div class="center-block">
+                        <ul>
+                            <li><strong>Users</strong>：帳號管理、授權</li>
+                            <li><strong>GameSessions</strong>：遊戲狀態存檔</li>
+                            <li><strong>Mistakes</strong>：學習歷程記錄</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 技術優勢 -->
+                <section>
+                    <h3>技術實現優勢</h3>
+                    <div class="center-block">
+                        <ol>
+                            <li><strong>無狀態 API 設計</strong>：易於水平擴展</li>
+                            <li><strong>高效演算法</strong>：優化模擬速度，減少延遲</li>
+                            <li><strong>資料完整性</strong>：使用 ACID 資料庫交易</li>
+                            <li><strong>安全性</strong>：JWT 身份驗證</li>
+                        </ol>
+                    </div>
+                </section>
+            </section>
+
+            <!-- 第 5 組：系統優勢 (單頁或垂直) -->
+            <section>
+                <section>
+                    <h2>系統整體優勢</h2>
+                    <div class="center-block" style="font-size: 1.2em;">
+                        <ul>
+                            <li>⚡ <strong>即時反饋</strong>：毫秒級建議</li>
+                            <li>📚 <strong>完整記錄</strong>：數據化學習成效</li>
+                            <li>🔬 <strong>科學方法</strong>：拒絕迷信，數據說話</li>
+                            <li>💎 <strong>使用者體驗</strong>：流暢的操作介面</li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>系統展示</h2>
+                </section>
+            </section>
+            <!-- 第 6 組：商業價值 (垂直) -->
+            <section>
+                <!-- 商業價值標題 -->
+                <section>
+                    <h2>商業價值與未來展望</h2>
+                </section>
+                
+                <!-- 目標客群 -->
+                <section>
+                    <h3>目標客群</h3>
+                    <div class="center-block">
+                        <ul>
+                            <li>🎯 <strong>初中階算牌客</strong>：需要低成本訓練工具</li>
+                            <li>🃏 <strong>進階玩家</strong>：驗證複雜場景策略</li>
+                            <li>🏫 <strong>教育機構</strong>：博弈課程培訓單位</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 價值主張 -->
+                <section>
+                    <h3>價值主張</h3>
+                    <div class="two-column" style="font-size: 0.8em;">
+                        <div>
+                            <h4 class="highlight">痛點 (Pains)</h4>
+                            <ul>
+                                <li>實體課程學費昂貴 ($1000+)</li>
+                                <li>網路上策略表參差不齊</li>
+                                <li>缺乏即時錯誤反饋</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="highlight">解決方案 (Gains)</h4>
+                            <ul>
+                                <li>低成本/訂閱制服務</li>
+                                <li>基於數學模擬的標準答案</li>
+                                <li>即時糾正，強化記憶</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 商業模式 -->
+                <section>
+                    <h3>商業模式</h3>
+                    <div class="center-block">
+                        <ul>
+                            <li>💰 <strong>訂閱制 (SaaS)</strong>：月付/年付解鎖進階功能</li>
+                            <li>🏢 <strong>B2B 授權</strong>：教育機構批量採購</li>
+                            <li>📦 <strong>買斷制</strong>：單機版離線使用</li>
+                        </ul>
+                        <p style="margin-top: 1em; font-size: 0.7em; color: #888;">預計成本 < 30萬台幣 (開發+行銷)，高潛在 ROI</p>
+                    </div>
+                </section>
+
+                <!-- 商業九宮格 -->
+                <section>
+                    <h2>未來展望</h2>
+                    <div class="center-block">
+                        <ul>
+                            <li>🚀 <strong>多人對戰模式</strong></li>
+                            <li>📱 <strong>行動裝置 App 化</strong></li>
+                            <li>🧠 <strong>AI 對手訓練 (RL)</strong></li>
+                            <li>🌍 <strong>多語言支持 (i18n)</strong></li>
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <!-- 第 7 組：專案管理與結語 (垂直) -->
+            <section>
+                    <h1 class="highlight">謝謝觀看</h1>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            center: true,           // 恢復預設居中
+            controls: true,
+            progress: true,
+            slideNumber: true,      // 顯示頁碼
+            transition: 'slide',    // 水平切換效果
+            backgroundTransition: 'fade',
+            
+            // 啟用垂直導航指示
+            navigationMode: 'default', 
+        });
+    </script>
+</body>
+</html>
